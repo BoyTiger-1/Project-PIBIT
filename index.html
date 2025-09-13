@@ -4,33 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PIBIT - Empowering Students Through STEM & Skills</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --accent-gradient: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            --card-gradient: linear-gradient(135deg, #f8f9ff 0%, #e8f4f8 100%);
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
             overflow-x: hidden;
         }
 
+        /* Custom animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 4px 15px rgba(238, 90, 36, 0.4); }
+            50% { box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6); }
+            100% { box-shadow: 0 4px 15px rgba(238, 90, 36, 0.4); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes float-particle {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
+            50% { transform: translateY(-100px) translateX(50px); opacity: 1; }
+        }
+
         /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .hero-section {
+            background: var(--primary-gradient);
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
+            color: white;
         }
 
-        .hero::before {
+        .hero-section::before {
             content: '';
             position: absolute;
             top: 0;
@@ -41,157 +76,111 @@
             animation: float 20s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(1deg); }
-        }
-
         .hero-content {
-            text-align: center;
-            max-width: 800px;
-            padding: 2rem;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: bold;
             animation: slideDown 1s ease-out;
             background: linear-gradient(45deg, #fff, #f0f8ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin-bottom: 1.5rem;
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
             animation: slideUp 1s ease-out 0.3s both;
-            opacity: 0.9;
+            opacity: 0;
+            margin-bottom: 2.5rem;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 0.9; transform: translateY(0); }
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
-            padding: 1rem 2rem;
-            text-decoration: none;
+        .cta-btn {
+            background: var(--accent-gradient);
+            border: none;
+            padding: 1rem 2.5rem;
             border-radius: 50px;
             font-size: 1.2rem;
             font-weight: bold;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(238, 90, 36, 0.4);
             animation: pulse 2s infinite;
+            color: white;
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 4px 15px rgba(238, 90, 36, 0.4); }
-            50% { box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6); }
-            100% { box-shadow: 0 4px 15px rgba(238, 90, 36, 0.4); }
-        }
-
-        .cta-button:hover {
+        .cta-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6);
+            color: white;
         }
 
         /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 0;
             transition: all 0.3s ease;
+            padding: 1rem 0;
         }
 
-        nav.scrolled {
-            background: rgba(255, 255, 255, 0.98);
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98) !important;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-
-        .logo {
+        .navbar-brand {
             font-size: 2rem;
             font-weight: bold;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
+        .nav-link {
             font-weight: 500;
             transition: color 0.3s ease;
         }
 
-        .nav-links a:hover {
-            color: #667eea;
+        .nav-link:hover {
+            color: #667eea !important;
         }
 
-        /* Sections */
-        section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Section styling */
+        .section-padding {
+            padding: 5rem 0;
         }
 
         .section-title {
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: bold;
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 3rem;
         }
 
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+        /* Problem section */
+        .problem-section {
+            background: var(--secondary-gradient);
+            border-radius: 30px;
+            padding: 4rem 2rem;
+            margin: 2rem 0;
         }
 
+        /* Feature cards */
         .feature-card {
-            background: linear-gradient(135deg, #f8f9ff 0%, #e8f4f8 100%);
-            padding: 2rem;
+            background: var(--card-gradient);
             border-radius: 20px;
+            padding: 2.5rem 2rem;
             text-align: center;
             transition: all 0.3s ease;
             border: 1px solid rgba(102, 126, 234, 0.1);
             position: relative;
             overflow: hidden;
+            height: 100%;
         }
 
         .feature-card::before {
@@ -216,8 +205,8 @@
         }
 
         .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
             position: relative;
             z-index: 1;
         }
@@ -234,31 +223,18 @@
             color: #666;
             position: relative;
             z-index: 1;
+            line-height: 1.6;
         }
 
-        /* Problem Section */
-        .problem-section {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-            color: #333;
-            border-radius: 30px;
-            margin: 2rem 0;
-        }
-
-        /* Impact Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
+        /* Stats cards */
         .stat-card {
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             color: white;
             border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
             transition: transform 0.3s ease;
+            height: 100%;
         }
 
         .stat-card:hover {
@@ -266,100 +242,111 @@
         }
 
         .stat-number {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
 
         .stat-label {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             opacity: 0.9;
         }
 
-        /* Contact Form */
+        /* Contact form */
         .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 3rem;
-            background: linear-gradient(135deg, #f8f9ff 0%, #e8f4f8 100%);
+            background: var(--card-gradient);
             border-radius: 20px;
+            padding: 3rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .form-group {
-            margin-bottom: 2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
+        .form-control {
             border: 2px solid transparent;
             border-radius: 10px;
-            background: white;
+            padding: 1rem;
             transition: border-color 0.3s ease;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
+        .form-control:focus {
             border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .form-select {
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
 
         .submit-btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 1rem 3rem;
+            background: var(--primary-gradient);
             border: none;
+            padding: 1rem 3rem;
             border-radius: 50px;
             font-size: 1.1rem;
             font-weight: bold;
-            cursor: pointer;
+            color: white;
             transition: all 0.3s ease;
-            width: 100%;
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            color: white;
         }
 
         /* Footer */
-        footer {
+        .footer {
             background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
             color: white;
-            text-align: center;
-            padding: 3rem 2rem;
-            margin-top: 5rem;
+            padding: 3rem 0;
         }
 
-        /* Mobile Responsiveness */
+        /* Animation classes */
+        .loading {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float-particle linear infinite;
+        }
+
+        /* Mobile optimizations */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            .hero-section {
+                min-height: 80vh;
             }
-
-            .hero-subtitle {
-                font-size: 1.2rem;
+            
+            .section-padding {
+                padding: 3rem 0;
             }
-
-            .nav-links {
-                display: none;
+            
+            .problem-section {
+                margin: 1rem;
+                padding: 3rem 1.5rem;
             }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
+            
+            .contact-form {
+                padding: 2rem;
             }
         }
 
@@ -367,175 +354,257 @@
         html {
             scroll-behavior: smooth;
         }
-
-        /* Loading animation */
-        .loading {
-            opacity: 0;
-            animation: fadeIn 1s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <div class="logo">🌍 PIBIT</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#problem">Problem</a></li>
-                <li><a href="#features">Solutions</a></li>
-                <li><a href="#impact">Impact</a></li>
-                <li><a href="#contact">Get Involved</a></li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#home">🌍 PIBIT</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#problem">Problem</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Solutions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#impact">Impact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Get Involved</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>PIBIT</h1>
-            <p class="hero-subtitle">Empowering Students Through STEM Knowledge & Essential Life Skills</p>
-            <a href="#contact" class="cta-button">Join the Movement</a>
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-10">
+                    <div class="hero-content">
+                        <h1 class="hero-title">PIBIT</h1>
+                        <p class="hero-subtitle">Empowering Students Through STEM Knowledge & Essential Life Skills</p>
+                        <a href="#contact" class="btn cta-btn">Join the Movement</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Problem Section -->
-    <section id="problem" class="problem-section loading">
-        <h2 class="section-title">The Challenge We're Solving</h2>
-        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-            <p style="font-size: 1.3rem; margin-bottom: 2rem; line-height: 1.8;">
-                Too many students lack access to <strong>affordable, engaging opportunities</strong> to build STEM knowledge and crucial soft skills like teamwork, communication, and problem-solving.
-            </p>
-            <p style="font-size: 1.2rem; color: #666;">
-                Current resources are either too expensive, too advanced, or simply not accessible to the students who need them most.
-            </p>
+    <section id="problem" class="section-padding">
+        <div class="container">
+            <div class="problem-section loading">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 text-center">
+                        <h2 class="section-title">The Challenge We're Solving</h2>
+                        <p class="lead mb-4">
+                            Too many students lack access to <strong>affordable, engaging opportunities</strong> to build STEM knowledge and crucial soft skills like teamwork, communication, and problem-solving.
+                        </p>
+                        <p class="fs-5 text-muted">
+                            Current resources are either too expensive, too advanced, or simply not accessible to the students who need them most.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="loading">
-        <h2 class="section-title">Our Solution</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🎓</div>
-                <h3>In-Person Workshops</h3>
-                <p>Hands-on courses blending STEM topics (coding, robotics, AI) with essential soft skills training at schools and community centers.</p>
+    <section id="features" class="section-padding bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center loading">
+                    <h2 class="section-title">Our Solution</h2>
+                </div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">💻</div>
-                <h3>Online Resource Hub</h3>
-                <p>Free access to course materials, quick-skill sheets, video tutorials, and interactive learning resources available 24/7.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🚀</div>
-                <h3>Hackathons & Challenges</h3>
-                <p>Hybrid events where students collaborate to solve real-world problems, building both technical skills and teamwork abilities.</p>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 loading">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">🎓</div>
+                        <h3>In-Person Workshops</h3>
+                        <p>Hands-on courses blending STEM topics (coding, robotics, AI) with essential soft skills training at schools and community centers.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 loading">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">💻</div>
+                        <h3>Online Resource Hub</h3>
+                        <p>Free access to course materials, quick-skill sheets, video tutorials, and interactive learning resources available 24/7.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 loading">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Hackathons & Challenges</h3>
+                        <p>Hybrid events where students collaborate to solve real-world problems, building both technical skills and teamwork abilities.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Target Audience -->
-    <section class="loading">
-        <h2 class="section-title">Who We Serve</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">👥</div>
-                <h3>Middle & High School Students</h3>
-                <p>Your peers looking to build confidence in STEM and develop essential life skills for future success.</p>
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center loading">
+                    <h2 class="section-title">Who We Serve</h2>
+                </div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">🏫</div>
-                <h3>Schools & Teachers</h3>
-                <p>Educational institutions seeking engaging supplemental programs to enhance their STEM curriculum.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🌍</div>
-                <h3>Global Student Community</h3>
-                <p>Building an international network of empowered students through Future Problem Solving connections.</p>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 loading">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">👥</div>
+                        <h3>Middle & High School Students</h3>
+                        <p>Your peers looking to build confidence in STEM and develop essential life skills for future success.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 loading">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">🏫</div>
+                        <h3>Schools & Teachers</h3>
+                        <p>Educational institutions seeking engaging supplemental programs to enhance their STEM curriculum.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 loading">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Global Student Community</h3>
+                        <p>Building an international network of empowered students through Future Problem Solving connections.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Impact Section -->
-    <section id="impact" class="loading">
-        <h2 class="section-title">Measuring Our Impact</h2>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number" id="students-count">0</div>
-                <div class="stat-label">Students Reached</div>
+    <section id="impact" class="section-padding bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center loading">
+                    <h2 class="section-title">Measuring Our Impact</h2>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="schools-count">0</div>
-                <div class="stat-label">Schools Partnered</div>
+            <div class="row g-4 mb-5">
+                <div class="col-lg-3 col-md-6 loading">
+                    <div class="stat-card h-100">
+                        <div class="stat-number" id="students-count">0</div>
+                        <div class="stat-label">Students Reached</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 loading">
+                    <div class="stat-card h-100">
+                        <div class="stat-number" id="schools-count">0</div>
+                        <div class="stat-label">Schools Partnered</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 loading">
+                    <div class="stat-card h-100">
+                        <div class="stat-number" id="workshops-count">0</div>
+                        <div class="stat-label">Workshops Delivered</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 loading">
+                    <div class="stat-card h-100">
+                        <div class="stat-number" id="confidence-count">0%</div>
+                        <div class="stat-label">Confidence Increase</div>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="workshops-count">0</div>
-                <div class="stat-label">Workshops Delivered</div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center loading">
+                    <p class="fs-5 text-muted">
+                        We track student attendance, school adoption rates, and confidence improvements in both STEM subjects and soft skills through detailed feedback surveys.
+                    </p>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="confidence-count">0%</div>
-                <div class="stat-label">Confidence Increase</div>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 3rem;">
-            <p style="font-size: 1.2rem; color: #666; max-width: 600px; margin: 0 auto;">
-                We track student attendance, school adoption rates, and confidence improvements in both STEM subjects and soft skills through detailed feedback surveys.
-            </p>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="loading">
-        <h2 class="section-title">Get Involved</h2>
-        <div class="contact-form">
-            <form id="contact-form">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center loading">
+                    <h2 class="section-title">Get Involved</h2>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="contact-form loading">
+                        <form id="contact-form">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label fw-bold">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label fw-bold">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="role" class="form-label fw-bold">I am a...</label>
+                                    <select class="form-select" id="role" name="role" required>
+                                        <option value="">Select your role</option>
+                                        <option value="student">Student</option>
+                                        <option value="teacher">Teacher/Educator</option>
+                                        <option value="parent">Parent</option>
+                                        <option value="volunteer">Potential Volunteer</option>
+                                        <option value="organization">Organization/School</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="interest" class="form-label fw-bold">What interests you most?</label>
+                                    <select class="form-select" id="interest" name="interest" required>
+                                        <option value="">Select your interest</option>
+                                        <option value="workshops">Attending Workshops</option>
+                                        <option value="hosting">Hosting Events</option>
+                                        <option value="resources">Accessing Resources</option>
+                                        <option value="volunteering">Volunteering</option>
+                                        <option value="partnership">School Partnership</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="message" class="form-label fw-bold">Message (Optional)</label>
+                                    <textarea class="form-control" id="message" name="message" rows="4" placeholder="Tell us more about your interest in PIBIT..."></textarea>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn submit-btn">Join the PIBIT Community</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="role">I am a...</label>
-                    <select id="role" name="role" style="width: 100%; padding: 1rem; border: 2px solid transparent; border-radius: 10px; background: white;">
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher/Educator</option>
-                        <option value="parent">Parent</option>
-                        <option value="volunteer">Potential Volunteer</option>
-                        <option value="organization">Organization/School</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="interest">What interests you most?</label>
-                    <select id="interest" name="interest" style="width: 100%; padding: 1rem; border: 2px solid transparent; border-radius: 10px; background: white;">
-                        <option value="workshops">Attending Workshops</option>
-                        <option value="hosting">Hosting Events</option>
-                        <option value="resources">Accessing Resources</option>
-                        <option value="volunteering">Volunteering</option>
-                        <option value="partnership">School Partnership</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message (Optional)</label>
-                    <textarea id="message" name="message" rows="4" placeholder="Tell us more about your interest in PIBIT..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Join the PIBIT Community</button>
-            </form>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 PIBIT - Empowering Students Through STEM & Skills</p>
-        <p style="margin-top: 1rem; opacity: 0.8;">Building the future, one student at a time 🌟</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-2">&copy; 2025 PIBIT - Empowering Students Through STEM & Skills</p>
+                    <p class="mb-0 opacity-75">Building the future, one student at a time 🌟</p>
+                </div>
+            </div>
+        </div>
     </footer>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
     <script>
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
@@ -561,7 +630,7 @@
             }, 20);
         }
 
-        // Trigger animations when in view
+        // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -570,15 +639,16 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('loaded');
                     
                     // Animate counters when impact section comes into view
-                    if (entry.target.id === 'impact') {
-                        animateCounter(document.getElementById('students-count'), 250);
-                        animateCounter(document.getElementById('schools-count'), 15);
-                        animateCounter(document.getElementById('workshops-count'), 42);
-                        animateCounter(document.getElementById('confidence-count'), 85, '%');
+                    if (entry.target.closest('#impact')) {
+                        setTimeout(() => {
+                            animateCounter(document.getElementById('students-count'), 250);
+                            animateCounter(document.getElementById('schools-count'), 15);
+                            animateCounter(document.getElementById('workshops-count'), 42);
+                            animateCounter(document.getElementById('confidence-count'), 85, '%');
+                        }, 300);
                     }
                 }
             });
@@ -586,9 +656,6 @@
 
         // Observe all loading elements
         document.querySelectorAll('.loading').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
             observer.observe(el);
         });
 
@@ -614,8 +681,21 @@
                     submitBtn.disabled = false;
                     e.target.reset();
                     
-                    // Show thank you message
-                    alert('Thank you for joining PIBIT! We\'ll be in touch soon with exciting opportunities to get involved.');
+                    // Bootstrap alert
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-success alert-dismissible fade show mt-3';
+                    alertDiv.innerHTML = `
+                        <strong>Thank you for joining PIBIT!</strong> We'll be in touch soon with exciting opportunities to get involved.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    `;
+                    document.querySelector('.contact-form').appendChild(alertDiv);
+                    
+                    // Auto-dismiss after 5 seconds
+                    setTimeout(() => {
+                        if (alertDiv.parentNode) {
+                            alertDiv.remove();
+                        }
+                    }, 5000);
                 }, 2000);
             }, 1500);
             
@@ -628,47 +708,49 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    const offsetTop = target.offsetTop - 80; // Account for fixed navbar
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
                     });
                 }
             });
         });
 
-        // Add some interactive particles effect to hero
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse.classList.contains('show')) {
+                    const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                    bsCollapse.hide();
+                }
+            });
+        });
+
+        // Create particles effect
         function createParticles() {
-            const hero = document.querySelector('.hero');
+            const hero = document.querySelector('.hero-section');
             for (let i = 0; i < 20; i++) {
                 const particle = document.createElement('div');
-                particle.style.cssText = `
-                    position: absolute;
-                    width: 4px;
-                    height: 4px;
-                    background: rgba(255, 255, 255, 0.3);
-                    border-radius: 50%;
-                    pointer-events: none;
-                    animation: float-particle ${5 + Math.random() * 10}s ease-in-out infinite;
-                    left: ${Math.random() * 100}%;
-                    top: ${Math.random() * 100}%;
-                    animation-delay: ${Math.random() * 5}s;
-                `;
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDuration = (5 + Math.random() * 10) + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
                 hero.appendChild(particle);
             }
         }
 
-        // Add particle animation styles
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes float-particle {
-                0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
-                50% { transform: translateY(-100px) translateX(50px); opacity: 1; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Initialize particles
-        createParticles();
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            // Trigger hero animations
+            setTimeout(() => {
+                document.querySelector('.hero-subtitle').style.opacity = '1';
+            }, 300);
+        });
     </script>
 </body>
 </html>
